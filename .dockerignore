@@ -1,0 +1,17 @@
+# This is just a comment.
+README.md
+.git
+mariadb
+stratum-mining
+
+# git
+.gitignore
+.env
+env
+
+#docker
+docker-compose.yml
+mpos/Dockerfile
+logs.txt
+run.sh
+run-init.sh

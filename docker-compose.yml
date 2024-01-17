@@ -1,0 +1,47 @@
+version: "3.7"
+services:
+  mpos:
+    container_name: mpos
+    restart: always
+    build:
+      context: ./mpos/.
+    volumes:
+      - ./mpos/include/config:/var/www/html/mpos/include/config
+    ports:
+      - 8000:80
+    depends_on:
+      - db
+
+  stratum-mining:
+    container_name: stratum-mining
+    restart: always
+    build: stratum-mining
+    image: stratum-mining
+    env_file: .env
+    ports:
+      - "3333:3333"
+    depends_on:
+      - db
+    volumes:
+      - ./stratum-mining/conf/config.py:/work/stratum-mining/conf/config.py
+      - ./logs_stratum-mining:/work/stratum-mining/log
+
+  db:
+    image: mariadb:10
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    hostname: mariadb
+    volumes:
+      - ./mariadb:/var/lib/mysql
+    env_file: .env
+    ports:
+      - 3308:3306
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 9000:8080

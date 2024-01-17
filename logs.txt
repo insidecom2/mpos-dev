@@ -1,0 +1,132 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [mpos internal] load .dockerignore
+#1 transferring context: 2B done
+#1 DONE 0.0s
+
+#2 [mpos internal] load build definition from Dockerfile
+#2 transferring dockerfile: 3.04kB 0.0s done
+#2 DONE 0.1s
+
+#3 [mpos internal] load metadata for docker.io/library/ubuntu:16.04
+#3 ...
+
+#4 [stratum-mining internal] load .dockerignore
+#4 transferring context: 2B 0.0s done
+#4 DONE 0.0s
+
+#5 [stratum-mining internal] load build definition from Dockerfile
+#5 transferring dockerfile: 1.75kB 0.0s done
+#5 DONE 0.1s
+
+#6 [stratum-mining internal] load metadata for docker.io/library/alpine:3.6
+#6 DONE 1.2s
+
+#3 [mpos internal] load metadata for docker.io/library/ubuntu:16.04
+#3 DONE 1.3s
+
+#7 [stratum-mining  1/15] FROM docker.io/library/alpine:3.6@sha256:66790a2b79e1ea3e1dabac43990c54aca5d1ddf268d9a5a0285e4167c8b24475
+#7 DONE 0.0s
+
+#8 [stratum-mining internal] load build context
+#8 transferring context: 32B 0.0s done
+#8 DONE 0.1s
+
+#9 [mpos  1/11] FROM docker.io/library/ubuntu:16.04@sha256:1f1a2d56de1d604801a9671f301190704c25d604a416f59e03c04f5c6ffee0d6
+#9 DONE 0.0s
+
+#10 [mpos internal] load build context
+#10 transferring context: 77.94kB 0.1s done
+#10 DONE 0.1s
+
+#11 [stratum-mining  9/15] RUN git clone https://github.com/ahmedbodi/stratum-mining.git &&     git clone https://github.com/ahmedbodi/stratum.git &&     git clone https://github.com/mecab/ytn_yescrypt_python.git
+#11 CACHED
+
+#12 [stratum-mining 11/15] RUN cd stratum-mining &&     curl https://gist.githubusercontent.com/mecab/bb3e1f1eaef9b7d06b1ec7cfa5f87f0d/raw/03c0f87b0faa84c0dc290443085953ac30a07ef2/stratum.patch |          tail -n +4          > stratum.patch &&     patch -p1 < stratum.patch
+#12 CACHED
+
+#13 [stratum-mining  3/15] RUN apk update &&     apk add alpine-sdk git curl python python-dev py-pip libffi-dev libressl-dev memcached libmemcached-dev zlib-dev cyrus-sasl-dev mysql-client mysql-dev
+#13 CACHED
+
+#14 [stratum-mining  6/15] RUN pip install simplejson pylibmc MySQL-python pycrypto twisted==16.4.0
+#14 CACHED
+
+#15 [stratum-mining  5/15] RUN wget https://bootstrap.pypa.io/pip/2.7/get-pip.py -O get-pip.py && python get-pip.py
+#15 CACHED
+
+#16 [stratum-mining  7/15] RUN pip install --upgrade setuptools     && pip install -U pyopenssl
+#16 CACHED
+
+#17 [stratum-mining 10/15] RUN pip install --upgrade pip setuptools && easy_install stratum
+#17 CACHED
+
+#18 [stratum-mining 14/15] COPY entrypoint /entrypoint
+#18 CACHED
+
+#19 [stratum-mining 13/15] RUN cd stratum-mining &&     sed -i -e 's/config = None/raise/' lib/settings.py &&     sed -i -e "/^sys\.path =/s/.*/sys.path = [os.path.join(os.getcwd(), 'conf'),os.path.join(os.getcwd(), '.'),os.path.join(os.getcwd(), 'externals', 'stratum-mining-proxy'),] + sys.path/" launcher.tac
+#19 CACHED
+
+#20 [stratum-mining  2/15] WORKDIR /work
+#20 CACHED
+
+#21 [stratum-mining  4/15] RUN apk add python3 py3-pip ca-certificates libressl-dev
+#21 CACHED
+
+#22 [stratum-mining  8/15] RUN cd ~ && easy_install -U distribute && pip install autobahn && pip install --upgrade urllib3 && pip install --upgrade python-language-server
+#22 CACHED
+
+#23 [stratum-mining 12/15] RUN cd ytn_yescrypt_python && python setup.py install
+#23 CACHED
+
+#24 [stratum-mining 15/15] RUN chmod +x /entrypoint
+#24 CACHED
+
+#25 [stratum-mining] exporting to image
+#25 exporting layers done
+#25 writing image sha256:2849e8b5c8d926633e8b524a4a6778a9dae28e08a56def093ffc4bba3ea65ae0 0.0s done
+#25 naming to docker.io/library/stratum-mining 0.0s done
+#25 DONE 0.0s
+
+#26 [mpos  9/11] COPY . /var/www/html/mpos
+#26 CACHED
+
+#27 [mpos  4/11] RUN wget https://bootstrap.pypa.io/pip/2.7/get-pip.py -O get-pip.py && python get-pip.py
+#27 CACHED
+
+#28 [mpos  2/11] RUN cd ~ && apt-get update     && apt-get dist-upgrade -y     && apt-get install -y git     && apt-get install -y build-essential libboost-all-dev     libcurl4-openssl-dev libdb5.3-dev libdb5.3++-dev     python-twisted python-mysqldb python-dev python-setuptools python-memcache     python-simplejson python-pip  python-pylibmc make autoconf libtool g++ build-essential     pkg-config unzip libboost-all-dev apache2 memcached php7.0-mysqlnd php7.0-curl     php7.0-json php7.0-curl libapache2-mod-php7.0 build-essential make automake     gcc php-memcached wget php-mbstring php-dom php-mysql php-mysqli vim nano curl
+#28 CACHED
+
+#29 [mpos 10/11] RUN cd /var/www/html/mpos &&  php composer.phar install && chown -R www-data templates/compile templates/cache    && sed -i '/# vim: syntax=apache ts=4 sw=4 sts=4 sr noet/ a\ServerName 127.0.0.1' /etc/apache2/apache2.conf
+#29 CACHED
+
+#30 [mpos  5/11] RUN pip install --upgrade setuptools     && pip install -U pyopenssl
+#30 CACHED
+
+#31 [mpos  7/11] WORKDIR /var
+#31 CACHED
+
+#32 [mpos  8/11] RUN mkdir /var/www/html/mpos
+#32 CACHED
+
+#33 [mpos  3/11] RUN wget http://download.oracle.com/berkeley-db/db-4.8.30.zip     && unzip db-4.8.30.zip && cd db-4.8.30 && cd build_unix     && ../dist/configure --prefix=/usr/local --enable-cxx     && make && make install && cd .. && echo "Berkeley libs installed"
+#33 CACHED
+
+#34 [mpos  6/11] RUN cd ~ && easy_install -U distribute && pip install autobahn && pip install --upgrade urllib3 && pip install --upgrade python-language-server
+#34 CACHED
+
+#35 [mpos 11/11] RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/mpos/public|' /etc/apache2/sites-available/000-default.conf
+#35 CACHED
+
+#36 [mpos] exporting to image
+#36 exporting layers done
+#36 writing image sha256:ca771954b0ee5329fa1068af8e5244829db27e48096f275177d6653bb7a7a325
+#36 writing image sha256:ca771954b0ee5329fa1068af8e5244829db27e48096f275177d6653bb7a7a325 0.0s done
+#36 naming to docker.io/library/php-mpos-mpos 0.0s done
+#36 DONE 0.1s
+ Container php-mpos-adminer-1  Running
+ Container php-mpos-db-1  Running
+ Container mpos  Running
+ Container stratum-mining  Recreate
+ Container stratum-mining  Recreated
+ Container stratum-mining  Starting
+ Container stratum-mining  Started
